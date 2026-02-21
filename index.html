@@ -1,0 +1,531 @@
+<!doctype html>
+<html lang="sv">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Birch Hill Studio — Portfolio</title>
+  <meta name="description" content="Birch Hill Studio — Visual Production. Projekt, portfolio och kontakt." />
+
+  <style>
+    :root{
+      --bg: #0b0c0f;
+      --panel: #11131a;
+      --text: #f2f3f5;
+      --muted: #a9adbb;
+      --line: rgba(255,255,255,.12);
+      --radius: 16px;
+      --max: 1100px;
+    }
+    *{ box-sizing: border-box; }
+    html{ scroll-behavior:smooth; }
+    body{
+      margin:0;
+      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial;
+      background: radial-gradient(1200px 600px at 50% -200px, rgba(255,255,255,.08), transparent 60%), var(--bg);
+      color: var(--text);
+      line-height: 1.5;
+    }
+    a{ color: inherit; text-decoration: none; }
+    .wrap{ max-width: var(--max); margin: 0 auto; padding: 0 18px; }
+
+    /* Topbar */
+    .topbar{
+      position: sticky; top:0; z-index: 50;
+      backdrop-filter: blur(10px);
+      background: rgba(11,12,15,.75);
+      border-bottom: 1px solid var(--line);
+    }
+    .topbar-inner{
+      display:flex; align-items:center; justify-content:space-between;
+      height: 64px;
+    }
+    .brand{
+      display:flex; gap:10px; align-items:center;
+      font-weight: 650; letter-spacing: .2px;
+    }
+    .dot{
+      width:10px; height:10px; border-radius:99px;
+      background: #fff;
+      box-shadow: 0 0 0 4px rgba(255,255,255,.12);
+    }
+    nav{ display:flex; gap: 14px; align-items:center; }
+    nav a{
+      padding: 8px 10px;
+      border-radius: 10px;
+      color: var(--muted);
+      border: 1px solid transparent;
+    }
+    nav a:hover{
+      color: var(--text);
+      border-color: var(--line);
+      background: rgba(255,255,255,.04);
+    }
+
+    /* Hero */
+    .hero{ padding: 44px 0 18px; }
+    .hero-grid{
+      display:grid; gap: 18px;
+      grid-template-columns: 1.1fr .9fr;
+      align-items: stretch;
+    }
+    .hero-card{
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: rgba(255,255,255,.03);
+      overflow:hidden;
+      padding: 20px;
+    }
+    .hero h1{
+      margin: 0 0 10px;
+      font-size: clamp(28px, 3.4vw, 44px);
+      line-height: 1.05;
+      letter-spacing: -0.5px;
+    }
+    .hero p{ margin: 0 0 16px; color: var(--muted); font-size: 16px; max-width: 58ch; }
+    .pillrow{ display:flex; flex-wrap:wrap; gap: 10px; margin-top: 14px; }
+    .pill{
+      font-size: 13px;
+      padding: 8px 10px;
+      border-radius: 999px;
+      border: 1px solid var(--line);
+      background: rgba(255,255,255,.03);
+      color: var(--muted);
+    }
+    .cta{
+      display:flex; gap: 10px; flex-wrap:wrap;
+      margin-top: 14px;
+    }
+    .btn{
+      display:inline-flex; align-items:center; justify-content:center;
+      padding: 10px 12px;
+      border-radius: 12px;
+      border: 1px solid var(--line);
+      background: rgba(255,255,255,.06);
+      color: var(--text);
+      font-weight: 600;
+    }
+    .btn:hover{ background: rgba(255,255,255,.10); }
+    .btn.secondary{ background: transparent; color: var(--muted); }
+    .btn.secondary:hover{ color: var(--text); }
+
+    .hero-media{
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      overflow:hidden;
+      background: #0f1117;
+      display:flex; align-items:center; justify-content:center;
+      min-height: 260px;
+      position: relative;
+    }
+    .hero-media video, .hero-media img{
+      width:100%; height:100%; object-fit: cover; display:block;
+      filter: contrast(1.05) saturate(1.05);
+    }
+    .hero-media .overlay{
+      position:absolute; inset:0;
+      background: radial-gradient(800px 400px at 50% 10%, rgba(255,255,255,.10), transparent 60%),
+                  linear-gradient(to bottom, rgba(0,0,0,.15), rgba(0,0,0,.45));
+      pointer-events:none;
+    }
+    .hero-media .stamp{
+      position:absolute; left:16px; bottom:16px;
+      font-size: 13px; color: rgba(255,255,255,.85);
+      background: rgba(0,0,0,.35);
+      border: 1px solid rgba(255,255,255,.18);
+      border-radius: 999px;
+      padding: 8px 10px;
+      backdrop-filter: blur(8px);
+    }
+
+    /* Sections */
+    section{ padding: 26px 0; }
+    .section-head{
+      display:flex; align-items:baseline; justify-content:space-between;
+      gap: 14px;
+      margin: 0 0 14px;
+    }
+    h2{ margin:0; font-size: 18px; letter-spacing: .2px; }
+    .sub{ margin:0; color: var(--muted); font-size: 14px; }
+
+    /* Projects grid */
+    .grid{
+      display:grid;
+      grid-template-columns: repeat(12, 1fr);
+      gap: 14px;
+    }
+    .project{
+      grid-column: span 6;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      overflow:hidden;
+      background: rgba(255,255,255,.02);
+      transition: transform .12s ease, background .12s ease;
+      cursor: pointer;
+    }
+    .project:hover{ transform: translateY(-2px); background: rgba(255,255,255,.04); }
+    .thumb{
+      aspect-ratio: 16/9;
+      background: #0f1117;
+      overflow:hidden;
+      position: relative;
+    }
+    .thumb img{
+      width:100%; height:100%; object-fit: cover; display:block;
+      filter: contrast(1.06) saturate(1.04);
+      transform: scale(1.02);
+    }
+    .thumb .tag{
+      position:absolute; top:12px; left:12px;
+      font-size: 12px;
+      padding: 6px 8px;
+      border-radius: 999px;
+      border: 1px solid rgba(255,255,255,.18);
+      background: rgba(0,0,0,.35);
+      color: rgba(255,255,255,.90);
+      backdrop-filter: blur(8px);
+    }
+    .proj-body{ padding: 14px; }
+    .proj-title{ font-weight: 650; margin:0 0 6px; }
+    .proj-meta{ margin:0; color: var(--muted); font-size: 13px; }
+
+    /* Modal */
+    .modal{
+      position: fixed; inset: 0;
+      background: rgba(0,0,0,.65);
+      display:none;
+      align-items: center;
+      justify-content: center;
+      padding: 18px;
+      z-index: 100;
+    }
+    .modal.open{ display:flex; }
+    .modal-card{
+      width: min(980px, 100%);
+      border-radius: 18px;
+      border: 1px solid rgba(255,255,255,.18);
+      background: rgba(17,19,26,.92);
+      backdrop-filter: blur(10px);
+      overflow:hidden;
+    }
+    .modal-media{
+      aspect-ratio: 16/9;
+      background: #0f1117;
+    }
+    .modal-media iframe, .modal-media video, .modal-media img{
+      width: 100%; height: 100%; border:0; display:block; object-fit: cover;
+    }
+    .modal-content{ padding: 16px; display:grid; gap: 10px; }
+    .modal-top{ display:flex; justify-content:space-between; gap: 12px; align-items:flex-start; }
+    .modal-title{ margin:0; font-size: 18px; font-weight: 700; }
+    .modal-close{
+      border: 1px solid var(--line);
+      background: transparent;
+      color: var(--muted);
+      border-radius: 12px;
+      padding: 8px 10px;
+      cursor: pointer;
+    }
+    .modal-close:hover{ color: var(--text); background: rgba(255,255,255,.06); }
+    .modal-desc{ margin:0; color: var(--muted); }
+    .kv{
+      display:flex; flex-wrap:wrap; gap: 10px;
+      padding-top: 6px;
+    }
+    .kv span{
+      font-size: 12px;
+      padding: 7px 9px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      color: var(--muted);
+      background: rgba(255,255,255,.03);
+    }
+
+    /* Contact cards */
+    .cards{
+      display:grid;
+      grid-template-columns: repeat(12, 1fr);
+      gap: 14px;
+    }
+    .card{
+      grid-column: span 6;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: rgba(255,255,255,.03);
+      padding: 16px;
+    }
+    .card h3{ margin:0 0 6px; font-size: 16px; }
+    .card p{ margin:0; color: var(--muted); }
+    .card a{ text-decoration: underline; text-decoration-color: rgba(255,255,255,.35); }
+
+    footer{
+      padding: 28px 0 40px;
+      color: var(--muted);
+      border-top: 1px solid var(--line);
+      margin-top: 22px;
+      font-size: 13px;
+    }
+
+    @media (max-width: 900px){
+      .hero-grid{ grid-template-columns: 1fr; }
+      .project{ grid-column: span 12; }
+      .card{ grid-column: span 12; }
+    }
+  </style>
+</head>
+
+<body>
+  <header class="topbar">
+    <div class="wrap topbar-inner">
+      <div class="brand">
+        <span class="dot" aria-hidden="true"></span>
+        <span>Birch Hill Studio</span>
+      </div>
+      <nav>
+        <a href="#about">About</a>
+        <a href="#projects">Projects</a>
+        <a href="#contact">Contact</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="wrap">
+    <section class="hero" aria-label="Intro">
+      <div class="hero-grid">
+        <div class="hero-card">
+          <h1>Visual production.<br/>Clean storytelling.</h1>
+          <p>
+            Vi gör foto, video, redigering och drönare — med fokus på människor, arbete och “det som faktiskt känns”.
+            Inga krusiduller. Bara starkt material.
+          </p>
+
+          <div class="cta">
+            <a class="btn" href="#projects">Se projekt</a>
+            <a class="btn secondary" href="#contact">Kontakta oss</a>
+          </div>
+
+          <div class="pillrow" aria-label="Services">
+            <span class="pill">Photo</span>
+            <span class="pill">Video</span>
+            <span class="pill">Editing</span>
+            <span class="pill">Drone</span>
+          </div>
+        </div>
+
+        <div class="hero-media" aria-label="Hero media">
+          <!-- Välj EN:
+               A) Video: lägg assets/hero.mp4
+               B) Bild: lägg assets/hero.jpg och byt taggen
+          -->
+          </video>
+          <<img src="assets/hero.jpg" alt="Stämningsbild från produktion" /> -->
+          <div class="overlay" aria-hidden="true"></div>
+          <div class="stamp">Stockholm • Available for projects</div>
+        </div>
+      </div>
+    </section>
+
+    <section id="about">
+      <div class="section-head">
+        <h2>ABOUT</h2>
+        <p class="sub">Kort och tydligt: vilka ni är och hur ni jobbar.</p>
+      </div>
+      <div class="hero-card">
+        <p style="margin:0;color:var(--muted)">
+          Birch Hill Studio är ett visual production company som levererar foto, videoproduktion och klipp — ofta som paket,
+          alltid med ett öga för människor och riktiga miljöer. Vi kan även ta drönare, och löser extra utrustning via hyra.
+        </p>
+      </div>
+    </section>
+
+    <section id="projects">
+      <div class="section-head">
+        <h2>PROJECTS</h2>
+        <p class="sub">Klicka ett projekt för att se mer (video, info, länkar).</p>
+      </div>
+
+      <div class="grid" id="projectsGrid" aria-label="Projektlista">
+        <!-- Projekt renderas av JS nedan -->
+      </div>
+    </section>
+
+    <section id="contact">
+      <div class="section-head">
+        <h2>CONTACT</h2>
+        <p class="sub">Snabbt att nå er. Inget tjafs.</p>
+      </div>
+
+      <div class="cards">
+        <div class="card">
+          <h3>Finlay Hill</h3>
+          <p>Producer / Photo / Video</p>
+          <p style="margin-top:10px">
+            <a href="mailto:hello@din-domän.se">hello@din-domän.se</a><br/>
+            +46 XX XXX XX XX
+          </p>
+        </div>
+        <div class="card">
+          <h3>Milton Björk</h3>
+          <p>Producer / Editing</p>
+          <p style="margin-top:10px">
+            <a href="mailto:hello@din-domän.se">hello@din-domän.se</a><br/>
+            +46 XX XXX XX XX
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <footer>
+      © <span id="year"></span> Birch Hill Studio • All Rights Reserved
+    </footer>
+  </main>
+
+  <!-- Modal -->
+  <div class="modal" id="modal" role="dialog" aria-modal="true" aria-label="Projekt">
+    <div class="modal-card">
+      <div class="modal-media" id="modalMedia"></div>
+      <div class="modal-content">
+        <div class="modal-top">
+          <div>
+            <h3 class="modal-title" id="modalTitle"></h3>
+            <p class="modal-desc" id="modalDesc"></p>
+          </div>
+          <button class="modal-close" id="modalClose" aria-label="Stäng">Close</button>
+        </div>
+        <div class="kv" id="modalKv"></div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // 1) Lägg till projekt här. Du kan ha:
+    // - poster: bild i assets/
+    // - type: "video" med embed (YouTube/Vimeo) eller "image"
+    // - embed: iframe-url (YouTube: https://www.youtube.com/embed/VIDEOID)
+    //         (Vimeo: https://player.vimeo.com/video/VIDEOID)
+    const PROJECTS = [
+      {
+        title: "Project Title 01",
+        tag: "COMMERCIAL",
+        year: "2025",
+        role: "Director / DoP",
+        poster: "assets/poster-1.jpg",
+        type: "video",
+        embed: "https://player.vimeo.com/video/000000000?h=000000000",
+        desc: "Kort beskrivning: vad det är, känslan, och vad ni levererade."
+      },
+      {
+        title: "Rotsuku Studios",
+        tag: "PORTRAIT",
+        year: "2025",
+        role: "Photo",
+        poster: "assets/poster-2.jpg",
+        type: "image",
+        src: "assets/poster-2.jpg",
+        desc: "En enkel foto-session med fokus på människor i arbete."
+      },
+      {
+        title: "Matilda Björk",
+        tag: "AD",
+        year: "2025",
+        role: "Photo",
+        poster: "assets/poster-3.jpg",
+        type: "image",
+        src: "assets/poster-3.jpg",
+        desc: "En enkel foto-session med fokus på produkten."
+      },
+      {
+        title: "154 - Youtube",
+        tag: "FILM",
+        year: "2026",
+        role: "Editing",
+        poster: "https://www.youtube.com/embed/s0ld6HEHWDo",
+        type: "video",
+        embed: "https://www.youtube.com/embed/s0ld6HEHWDo?autoplay=1",
+        desc: "Klippt för tempo, tydlighet och känsla."
+      }
+    ];
+
+    const grid = document.getElementById("projectsGrid");
+    const modal = document.getElementById("modal");
+    const modalMedia = document.getElementById("modalMedia");
+    const modalTitle = document.getElementById("modalTitle");
+    const modalDesc = document.getElementById("modalDesc");
+    const modalKv = document.getElementById("modalKv");
+    const modalClose = document.getElementById("modalClose");
+
+    document.getElementById("year").textContent = new Date().getFullYear();
+
+    function renderProjects(){
+      grid.innerHTML = "";
+      PROJECTS.forEach((p, idx) => {
+        const el = document.createElement("article");
+        el.className = "project";
+        el.tabIndex = 0;
+        el.setAttribute("role", "button");
+        el.setAttribute("aria-label", "Öppna " + p.title);
+        el.innerHTML = `
+          <div class="thumb">
+            <img src="${p.poster}" alt="${p.title} poster" loading="lazy" />
+            <span class="tag">${p.tag}</span>
+          </div>
+          <div class="proj-body">
+            <p class="proj-title">${p.title}</p>
+            <p class="proj-meta">${p.year} • ${p.role}</p>
+          </div>
+        `;
+        el.addEventListener("click", () => openModal(idx));
+        el.addEventListener("keydown", (e) => {
+          if(e.key === "Enter" || e.key === " ") openModal(idx);
+        });
+        grid.appendChild(el);
+      });
+    }
+
+    function openModal(i){
+      const p = PROJECTS[i];
+      modalTitle.textContent = p.title;
+      modalDesc.textContent = p.desc || "";
+      modalKv.innerHTML = `
+        <span>${p.tag}</span>
+        <span>${p.year}</span>
+        <span>${p.role}</span>
+      `;
+
+      // media
+      modalMedia.innerHTML = "";
+      if(p.type === "video" && p.embed){
+        const iframe = document.createElement("iframe");
+        iframe.src = p.embed;
+        iframe.allow = "autoplay; fullscreen; picture-in-picture";
+        iframe.allowFullscreen = true;
+        modalMedia.appendChild(iframe);
+      } else if(p.type === "image" && p.src){
+        const img = document.createElement("img");
+        img.src = p.src;
+        img.alt = p.title;
+        modalMedia.appendChild(img);
+      } else {
+        const img = document.createElement("img");
+        img.src = p.poster;
+        img.alt = p.title;
+        modalMedia.appendChild(img);
+      }
+
+      modal.classList.add("open");
+      document.body.style.overflow = "hidden";
+    }
+
+    function closeModal(){
+      modal.classList.remove("open");
+      modalMedia.innerHTML = "";
+      document.body.style.overflow = "";
+    }
+
+    modalClose.addEventListener("click", closeModal);
+    modal.addEventListener("click", (e) => { if(e.target === modal) closeModal(); });
+    window.addEventListener("keydown", (e) => { if(e.key === "Escape" && modal.classList.contains("open")) closeModal(); });
+
+    renderProjects();
+  </script>
+</body>
+</html>
